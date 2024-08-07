@@ -1,9 +1,9 @@
 from sqlalchemy import MetaData, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
-from sqlalchemy import Column, ForeignKey, Enum
+from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import ARRAY
-from sqlalchemy.dialects.postgresql import INTEGER, VARCHAR, TIMESTAMP, BOOLEAN, UUID, ARRAY as pgUUID
+from sqlalchemy.dialects.postgresql import VARCHAR, TIMESTAMP, BOOLEAN, UUID as pgUUID
 
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -73,8 +73,8 @@ class AdditionalInfo(Base):
         primary_key=True,
         nullable=False,
     )
-    food_info = Column(VARCHAR, ForeignKey("food.user_id"), nullable=True)
-    cosmetics_info = Column(VARCHAR, ForeignKey("cosmetics.user_id"), nullable=True)
+    food_info = Column(pgUUID(as_uuid=True), ForeignKey("food.user_id"), unique=True, nullable=True)
+    cosmetics_info = Column(pgUUID(as_uuid=True), ForeignKey("cosmetics.user_id"), nullable=True)
 
     user = relationship("UserProfile", back_populates="additional_info")
     food = relationship("Food", back_populates="additional_info")
@@ -84,23 +84,9 @@ class AdditionalInfo(Base):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 DB_NAME = os.getenv('PG_DB_NAME')
 DB_USER = os.getenv('PG_DB_USER')
-DB_PASSWORD = os.getenv('PG_DB_PASSWORD')
+DB_PASSWORD = quote_plus(os.getenv('PG_DB_PASSWORD'))
 DB_HOST = os.getenv('PG_DB_HOST')
 DB_PORT = os.getenv('PG_DB_PORT')
 

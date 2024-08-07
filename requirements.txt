@@ -5,3 +5,4 @@ pydantic
 instructor
 setuptools
 langchain
+psycopg2-binary
