@@ -1,0 +1,6 @@
+uuid
+uvicorn
+python-dotenv
+pydantic
+instructor
+setuptools
