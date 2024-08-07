@@ -2,7 +2,8 @@ from sqlalchemy import MetaData, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy import Column, ForeignKey, Enum
-from sqlalchemy.dialects.postgresql import INTEGER, VARCHAR, TIMESTAMP, BOOLEAN, UUID as pgUUID
+from sqlalchemy.types import ARRAY
+from sqlalchemy.dialects.postgresql import INTEGER, VARCHAR, TIMESTAMP, BOOLEAN, UUID, ARRAY as pgUUID
 
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -17,16 +18,67 @@ Base = declarative_base()
 ############ USER PROFILE ############
 
 class UserProfile(Base):
-    pass
+    __tablename__ = "user"
+    user_id = Column(
+        pgUUID(as_uuid=True),
+        primary_key=True,
+        nullable=False,
+        unique=True,
+    )
+    first_name = Column(VARCHAR, nullable=False)
+    last_name = Column(VARCHAR, nullable=False)
+    email = Column(VARCHAR, primary_key=True)
+    created_at = Column(TIMESTAMP, nullable=False)
+    deleted = Column(BOOLEAN, nullable=True, default=False)
+
+    food = relationship("Food", back_populates="user", uselist=False)
+    cosmetics = relationship("Cosmetics", back_populates="user", uselist=False)
+    additional_info = relationship("AdditionalInfo", back_populates="user", uselist=False)
 
 class Food(Base):
-    pass
+    __tablename__ = "food"
+    user_id = Column(
+        pgUUID(as_uuid=True),
+        ForeignKey("user.user_id"),
+        primary_key=True,
+        nullable=False,
+    )
+    allergies = Column(ARRAY(VARCHAR), nullable=True)
+    medical_conditions = Column(ARRAY(VARCHAR), nullable=True)
+    dietary_restrictions = Column(ARRAY(VARCHAR), nullable=True)
+
+    user = relationship("UserProfile", back_populates="food")
+    additional_info = relationship("AdditionalInfo", back_populates="food")
 
 class Cosmetics(Base):
-    pass
+    __tablename__ = "cosmetics"
+    user_id = Column(
+        pgUUID(as_uuid=True),
+        ForeignKey("user.user_id"),
+        primary_key=True,
+        nullable=False,
+    )
+    allergies = Column(ARRAY(VARCHAR), nullable=True)
+    medical_conditions = Column(ARRAY(VARCHAR), nullable=True)
+    restrictions = Column(ARRAY(VARCHAR), nullable=True)
+
+    user = relationship("UserProfile", back_populates="cosmetics")
+    additional_info = relationship("AdditionalInfo", back_populates="cosmetics")
 
 class AdditionalInfo(Base):
-    pass
+    __tablename__ = "additional_info"
+    user_id = Column(
+        pgUUID(as_uuid=True),
+        ForeignKey("user.user_id"),
+        primary_key=True,
+        nullable=False,
+    )
+    food_info = Column(VARCHAR, ForeignKey("food.user_id"), nullable=True)
+    cosmetics_info = Column(VARCHAR, ForeignKey("cosmetics.user_id"), nullable=True)
+
+    user = relationship("UserProfile", back_populates="additional_info")
+    food = relationship("Food", back_populates="additional_info")
+    cosmetics = relationship("Cosmetics", back_populates="additional_info")
 
 
 
