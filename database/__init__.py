@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.types import ARRAY
-from sqlalchemy.dialects.postgresql import VARCHAR, TIMESTAMP, BOOLEAN, UUID as pgUUID
+from sqlalchemy.dialects.postgresql import VARCHAR, ENUM, TIMESTAMP, BOOLEAN, UUID as pgUUID
 
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -33,7 +33,7 @@ class UserProfile(Base):
 
     food = relationship("Food", back_populates="user", uselist=False)
     cosmetics = relationship("Cosmetics", back_populates="user", uselist=False)
-    additional_info = relationship("AdditionalInfo", back_populates="user", uselist=False)
+    # additional_info = relationship("AdditionalInfo", back_populates="user", uselist=False)
 
 class Food(Base):
     __tablename__ = "food"
@@ -46,9 +46,10 @@ class Food(Base):
     allergies = Column(ARRAY(VARCHAR), nullable=True)
     medical_conditions = Column(ARRAY(VARCHAR), nullable=True)
     dietary_restrictions = Column(ARRAY(VARCHAR), nullable=True)
+    additional_info = Column(VARCHAR, nullable=True)
 
     user = relationship("UserProfile", back_populates="food")
-    additional_info = relationship("AdditionalInfo", back_populates="food")
+    # additional_info = relationship("AdditionalInfo", back_populates="food")
 
 class Cosmetics(Base):
     __tablename__ = "cosmetics"
@@ -61,28 +62,41 @@ class Cosmetics(Base):
     allergies = Column(ARRAY(VARCHAR), nullable=True)
     medical_conditions = Column(ARRAY(VARCHAR), nullable=True)
     restrictions = Column(ARRAY(VARCHAR), nullable=True)
+    additional_info = Column(VARCHAR, nullable=True)
 
     user = relationship("UserProfile", back_populates="cosmetics")
-    additional_info = relationship("AdditionalInfo", back_populates="cosmetics")
+    # additional_info = relationship("AdditionalInfo", back_populates="cosmetics")
 
-class AdditionalInfo(Base):
-    __tablename__ = "additional_info"
+# class AdditionalInfo(Base):
+#     __tablename__ = "additional_info"
+#     user_id = Column(
+#         pgUUID(as_uuid=True),
+#         ForeignKey("user.user_id"),
+#         primary_key=True,
+#         nullable=False,
+#     )
+#     food_info = Column(pgUUID(as_uuid=True), ForeignKey("food.user_id"), unique=True, nullable=True)
+#     cosmetics_info = Column(pgUUID(as_uuid=True), ForeignKey("cosmetics.user_id"), nullable=True)
+
+#     user = relationship("UserProfile", back_populates="additional_info")
+#     food = relationship("Food", back_populates="additional_info")
+#     cosmetics = relationship("Cosmetics", back_populates="additional_info")
+
+class ModelResponse(Base):
+    __tablename__ = "model_response"
     user_id = Column(
         pgUUID(as_uuid=True),
         ForeignKey("user.user_id"),
         primary_key=True,
         nullable=False,
     )
-    food_info = Column(pgUUID(as_uuid=True), ForeignKey("food.user_id"), unique=True, nullable=True)
-    cosmetics_info = Column(pgUUID(as_uuid=True), ForeignKey("cosmetics.user_id"), nullable=True)
-
-    user = relationship("UserProfile", back_populates="additional_info")
-    food = relationship("Food", back_populates="additional_info")
-    cosmetics = relationship("Cosmetics", back_populates="additional_info")
+    category = Column(ENUM("food", "cosmetics"), nullable=False)
+    image_url = Column(VARCHAR, nullable=False)
+    response = Column(VARCHAR, nullable=False)
+    created_at = Column(TIMESTAMP, nullable=False)
 
 
-
-
+    
 
 DB_NAME = os.getenv('PG_DB_NAME')
 DB_USER = os.getenv('PG_DB_USER')

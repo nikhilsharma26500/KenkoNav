@@ -2,10 +2,6 @@ uuid
 uvicorn
 python-dotenv
 pydantic
-instructor
 setuptools
-langchain
 psycopg2-binary
-langchain-google-genai
-transformers
-qwen_vl_utils
+fastapi[standard]
