@@ -1,7 +1,7 @@
 from database import table_creation_session, UserProfile, Cosmetics, ModelResponse
 from datetime import datetime
 from typing import List
-import uuid
+
 
 """
 Functions that we need:

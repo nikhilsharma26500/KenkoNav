@@ -1,2 +1,8 @@
 .env
 venv
+
+database/__pycache__/
+food/__pycache__/
+cosmetics/__pycache__/
+food/db_functions/__pycache__/
+cosmetics/db_functions/__pycache__/
