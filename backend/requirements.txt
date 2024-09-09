@@ -1,0 +1,7 @@
+uuid
+uvicorn
+python-dotenv
+pydantic
+setuptools
+psycopg2-binary
+fastapi[standard]

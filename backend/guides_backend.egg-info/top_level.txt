@@ -1,0 +1,4 @@
+cosmetics
+database
+food
+llm
