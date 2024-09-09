@@ -43,9 +43,9 @@ class Food(Base):
         primary_key=True,
         nullable=False,
     )
-    allergies = Column(ARRAY(VARCHAR), nullable=True)
-    medical_conditions = Column(ARRAY(VARCHAR), nullable=True)
-    dietary_restrictions = Column(ARRAY(VARCHAR), nullable=True)
+    allergies = Column(VARCHAR, nullable=True)
+    medical_conditions = Column(VARCHAR, nullable=True)
+    dietary_restrictions = Column(VARCHAR, nullable=True)
     additional_info = Column(VARCHAR, nullable=True)
 
     user = relationship("UserProfile", back_populates="food")
@@ -59,9 +59,9 @@ class Cosmetics(Base):
         primary_key=True,
         nullable=False,
     )
-    allergies = Column(ARRAY(VARCHAR), nullable=True)
-    medical_conditions = Column(ARRAY(VARCHAR), nullable=True)
-    restrictions = Column(ARRAY(VARCHAR), nullable=True)
+    allergies = Column(VARCHAR, nullable=True)
+    medical_conditions = Column(VARCHAR, nullable=True)
+    restrictions = Column(VARCHAR, nullable=True)
     additional_info = Column(VARCHAR, nullable=True)
 
     user = relationship("UserProfile", back_populates="cosmetics")
@@ -82,6 +82,9 @@ class Cosmetics(Base):
 #     food = relationship("Food", back_populates="additional_info")
 #     cosmetics = relationship("Cosmetics", back_populates="additional_info")
 
+############ MODEL RESPONSE ############
+
+category_enum = ENUM("food", "cosmetics", name="category_enum")
 class ModelResponse(Base):
     __tablename__ = "model_response"
     user_id = Column(
@@ -90,7 +93,7 @@ class ModelResponse(Base):
         primary_key=True,
         nullable=False,
     )
-    category = Column(ENUM("food", "cosmetics"), nullable=False)
+    category = Column(category_enum, nullable=False)
     image_url = Column(VARCHAR, nullable=False)
     response = Column(VARCHAR, nullable=False)
     created_at = Column(TIMESTAMP, nullable=False)
