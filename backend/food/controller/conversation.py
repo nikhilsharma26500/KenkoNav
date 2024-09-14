@@ -1,9 +1,10 @@
-from fastapi import APIRouter, HTTPException, UploadFile, File
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form
 from food.db_functions import *
 from database import table_creation_session
 from llm.handler import GeminiHandler
 import os
 from PIL import Image
+import json
 
 
 llm_handler = GeminiHandler()
@@ -29,21 +30,22 @@ def get_dietary_info(user_id: str):
     
     return dietary_info
 
-@router.post("/set_model_response")
-def set_model_response(user_id: str, response: str):
-    # Have to call LLM here
-
-    
-
-    
-    return {"message": "Model response added successfully!"}
-
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-@router.post("/set_model_response")
-async def set_model_response(category = "food", file: UploadFile = File(...)):
+model_response = {}
+
+@router.post("/set_model_response_food")
+async def set_model_response_food(
+    # dietary_details: DietaryDetails,
+    category: str = Form("food"),
+    allergies: str = Form(""),
+    medicalConditions: str = Form(""),
+    dietaryRestrictions: str = Form(""),
+    additionalInfo: str = Form(""),
+    file: UploadFile = File(...)
+    ):
 
     file_location = os.path.join(UPLOAD_DIR, file.filename)
     
@@ -52,9 +54,19 @@ async def set_model_response(category = "food", file: UploadFile = File(...)):
 
     img_address = Image.open(file_location)
 
-    response = llm_handler.generate_response(category=category, query="What are the ingredients of this product?", image_url=img_address)
+    additional_info = {
+        "Allergies": allergies,
+        "Medication Condition": medicalConditions,
+        "Dietary Restrictions": dietaryRestrictions,
+        "Additional Info": additionalInfo
+    }
 
-    print(response)
+    response = llm_handler.generate_response(
+        category=category, 
+        query="What are the ingredients of this product?", 
+        image_url=img_address,
+        # additional_info=additional_info
+        )
     
     return {"message": response}
 
