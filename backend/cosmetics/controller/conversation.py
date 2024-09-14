@@ -1,7 +1,10 @@
-from fastapi import APIRouter, HTTPException
-from db_functions import *
+from fastapi import APIRouter, HTTPException, UploadFile, File
+from cosmetics.db_functions import *
 from database import table_creation_session
 from llm.handler import GeminiHandler
+import os
+from PIL import Image
+
 
 llm_handler = GeminiHandler()
 
@@ -25,11 +28,21 @@ def get_health_info(user_id: str):
     
     return health_info
 
+UPLOAD_DIR = "uploads"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @router.post("/set_model_response")
-def set_model_response(user_id: str, category: str, image_url: str, response: str):
-    # Have to call LLM here
+async def set_model_response(category = "cosmetics", file: UploadFile = File(...)):
 
-    add_model_response_cosmetics(user_id, category, image_url, response)
+    file_location = os.path.join(UPLOAD_DIR, file.filename)
     
-    return {"message": "Model response added successfully!"}
+    with(open(file_location, "wb+")) as f:
+        f.write(await file.read())
+
+    img_address = Image.open(file_location)
+
+    response = llm_handler.generate_response(category=category, query="What are the ingredients of this product?", image_url=img_address)
+
+    print(response)
+    
+    return {"message": response}

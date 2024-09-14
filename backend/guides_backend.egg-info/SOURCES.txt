@@ -3,11 +3,13 @@ cosmetics/__init__.py
 cosmetics/controller/__init__.py
 cosmetics/controller/conversation.py
 cosmetics/db_functions/__init__.py
+cosmetics/db_functions/test_funcs.py
 database/__init__.py
 food/__init__.py
 food/controller/__init__.py
 food/controller/conversation.py
 food/db_functions/__init__.py
+food/db_functions/test_funcs.py
 guides_backend.egg-info/PKG-INFO
 guides_backend.egg-info/SOURCES.txt
 guides_backend.egg-info/dependency_links.txt

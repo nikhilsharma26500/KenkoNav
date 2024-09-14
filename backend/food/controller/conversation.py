@@ -1,7 +1,10 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, UploadFile, File
 from food.db_functions import *
 from database import table_creation_session
 from llm.handler import GeminiHandler
+import os
+from PIL import Image
+
 
 llm_handler = GeminiHandler()
 
@@ -26,13 +29,41 @@ def get_dietary_info(user_id: str):
     
     return dietary_info
 
-
 @router.post("/set_model_response")
 def set_model_response(user_id: str, response: str):
     # Have to call LLM here
 
     
 
-    add_model_response_food(user_id, response)
     
     return {"message": "Model response added successfully!"}
+
+
+UPLOAD_DIR = "uploads"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+@router.post("/set_model_response")
+async def set_model_response(category = "food", file: UploadFile = File(...)):
+
+    file_location = os.path.join(UPLOAD_DIR, file.filename)
+    
+    with(open(file_location, "wb+")) as f:
+        f.write(await file.read())
+
+    img_address = Image.open(file_location)
+
+    response = llm_handler.generate_response(category=category, query="What are the ingredients of this product?", image_url=img_address)
+
+    print(response)
+    
+    return {"message": response}
+
+@router.get("/get_model_response")
+def get_model_response(user_id: str):
+    
+    model_response = fetch_model_response(user_id)
+    
+    if isinstance(model_response, str):
+        raise HTTPException(status_code=400, detail=model_response)
+    
+    return model_response
