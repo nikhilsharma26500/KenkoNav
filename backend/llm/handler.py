@@ -30,24 +30,30 @@ class GeminiHandler:
             raise ValueError(f"Failed to download image: {e}")
         
     def generate_response(self, category: str, query: str, image_url: str):
-        prompt = "your job is just to be straight to the point and answer whatever the user has asked. If the user asks for the ingredients, you should list them out. If the user asks if any of the ingredients are harmful, you should provide that information as well. User is also providing you with additional info about their health background, take a look at them and give them an edvice based on it. You should also be able to handle multiple questions in a single response. For example, if the user asks for the ingredients and then asks if any of them are harmful, you should be able to answer both questions in a single response."
+        # additional_info_str = json.dumps(additional_info)
+
+        prompt = f"""your job is just to be straight to the point and answer whatever the user has asked. If the user asks for the ingredients, you should list them out. If the user asks if any of the ingredients are harmful, you should provide that information as well. User is also providing you with additional info about their health background, take a look at them and give them an edvice based on it. You should also be able to handle multiple questions in a single response. For example, if the user asks for the ingredients and then asks if any of them are harmful, you should be able to answer both questions in a single response.
+        You are also provided with some details about user's profile:
+       
+        """
 
         try:
             # img = self.download_image(image_url=self.url)
             # img = Image.open("<Path of Image>")
             # user_info = json.dumps(fetch_dietary_info(user_id="4f8daf90-3c8e-4ad2-b55b-ebf1f7b46ba6"))
 
-            # user_info = json.dumps(form_data)
-
+            # user_info = json.dumps(additional_info)
+            # print(user_info)
+            # print(additional_info)
 
 
             model = genai.GenerativeModel(model_name=self.model_name)
             response = model.generate_content([
                 query,
+                # additional_info,
                 prompt,
-                # user_info,
-                image_url
-            ])
+                image_url,
+            ]),
 
             return response.text
         

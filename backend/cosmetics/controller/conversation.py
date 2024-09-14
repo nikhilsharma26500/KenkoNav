@@ -31,8 +31,8 @@ def get_health_info(user_id: str):
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-@router.post("/set_model_response")
-async def set_model_response(category = "cosmetics", file: UploadFile = File(...)):
+@router.post("/set_model_response_cosmetics")
+async def set_model_response_cosmetics(category = "cosmetics", file: UploadFile = File(...)):
 
     file_location = os.path.join(UPLOAD_DIR, file.filename)
     
