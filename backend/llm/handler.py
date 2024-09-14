@@ -29,16 +29,25 @@ class GeminiHandler:
         except requests.RequestException as e:
             raise ValueError(f"Failed to download image: {e}")
         
-    def generate_response(self, query: str, image_url: str):
+    def generate_response(self, category: str, query: str, image_url: str):
         prompt = "your job is just to be straight to the point and answer whatever the user has asked. If the user asks for the ingredients, you should list them out. If the user asks if any of the ingredients are harmful, you should provide that information as well. User is also providing you with additional info about their health background, take a look at them and give them an edvice based on it. You should also be able to handle multiple questions in a single response. For example, if the user asks for the ingredients and then asks if any of them are harmful, you should be able to answer both questions in a single response."
 
         try:
-            img = self.download_image(image_url=self.url)
-            img = Image.open(r"C:\Users\nikhi\OneDrive\Documents\Projects\Open Source\side_project\public\test_image.jpg")
-            user_info = json.dumps(fetch_dietary_info(user_id="4f8daf90-3c8e-4ad2-b55b-ebf1f7b46ba6"))
+            # img = self.download_image(image_url=self.url)
+            # img = Image.open("<Path of Image>")
+            # user_info = json.dumps(fetch_dietary_info(user_id="4f8daf90-3c8e-4ad2-b55b-ebf1f7b46ba6"))
+
+            # user_info = json.dumps(form_data)
+
+
 
             model = genai.GenerativeModel(model_name=self.model_name)
-            response = model.generate_content([query, prompt, user_info, img])
+            response = model.generate_content([
+                query,
+                prompt,
+                # user_info,
+                image_url
+            ])
 
             return response.text
         

@@ -11,7 +11,7 @@ load_dotenv(find_dotenv())
 
 app = FastAPI()
 
-origins = ["http://localhost:3000","http://127.0.0.1:8000",]
+origins = ["http://localhost:5173","http://127.0.0.1:8000", "http://192.168.2.34:5173"]
 
 app.add_middleware(
     CORSMiddleware,

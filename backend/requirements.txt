@@ -5,3 +5,6 @@ pydantic
 setuptools
 psycopg2-binary
 fastapi[standard]
+sqlalchemy
+google-generativeai
+pillow
