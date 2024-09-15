@@ -38,7 +38,6 @@ model_response = {}
 
 @router.post("/set_model_response_food")
 async def set_model_response_food(
-    # dietary_details: DietaryDetails,
     category: str = Form("food"),
     allergies: str = Form(""),
     medicalConditions: str = Form(""),
@@ -55,6 +54,7 @@ async def set_model_response_food(
     img_address = Image.open(file_location)
 
     additional_info = {
+        "Category": category,
         "Allergies": allergies,
         "Medication Condition": medicalConditions,
         "Dietary Restrictions": dietaryRestrictions,
@@ -62,11 +62,10 @@ async def set_model_response_food(
     }
 
     response = llm_handler.generate_response(
-        category=category, 
-        query="What are the ingredients of this product?", 
+        query="What are the ingredients in this product? Will it affect health?", 
         image_url=img_address,
-        # additional_info=additional_info
-        )
+        additional_info=additional_info
+    )
     
     return {"message": response}
 

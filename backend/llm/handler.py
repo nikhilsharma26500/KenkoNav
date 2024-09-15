@@ -29,31 +29,28 @@ class GeminiHandler:
         except requests.RequestException as e:
             raise ValueError(f"Failed to download image: {e}")
         
-    def generate_response(self, category: str, query: str, image_url: str):
-        # additional_info_str = json.dumps(additional_info)
-
-        prompt = f"""your job is just to be straight to the point and answer whatever the user has asked. If the user asks for the ingredients, you should list them out. If the user asks if any of the ingredients are harmful, you should provide that information as well. User is also providing you with additional info about their health background, take a look at them and give them an edvice based on it. You should also be able to handle multiple questions in a single response. For example, if the user asks for the ingredients and then asks if any of them are harmful, you should be able to answer both questions in a single response.
-        You are also provided with some details about user's profile:
-       
-        """
-
+    def generate_response(self, query: str, image_url: str, additional_info: dict):
         try:
-            # img = self.download_image(image_url=self.url)
-            # img = Image.open("<Path of Image>")
-            # user_info = json.dumps(fetch_dietary_info(user_id="4f8daf90-3c8e-4ad2-b55b-ebf1f7b46ba6"))
+            user_info = json.dumps(additional_info)
+            print(additional_info)
 
-            # user_info = json.dumps(additional_info)
-            # print(user_info)
-            # print(additional_info)
+            prompt = f"""your job is just to be straight to the point and answer whatever the user has asked. If the user asks for the ingredients, you should list them out. If the user asks if any of the ingredients are harmful, you should provide that information as well. User is also providing you with additional info about their health background, take a look at them and give them an edvice based on it. You should also be able to handle multiple questions in a single response. For example, if the user asks for the ingredients and then asks if any of them are harmful, you should be able to answer both questions in a single response.
+
+            You will also be provided with extra information about the user's health background. This information will include allergies, medical conditions, restrictions, and any additional information the user provides. You should take this information into account when generating your response.
+
+            Additional Information: {user_info}
+
+            Over in category: {user_info[0]}, the answer should be generated such that it meets the consumption pattern for that category such that, if it's "food" then it should be consumable, if it's "cosmetics" then it should be applicable to the skin, etc.
+            """
 
 
             model = genai.GenerativeModel(model_name=self.model_name)
             response = model.generate_content([
                 query,
-                # additional_info,
                 prompt,
-                image_url,
-            ]),
+                user_info,
+                image_url
+            ])
 
             return response.text
         
