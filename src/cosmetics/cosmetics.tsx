@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import { SiCodemagic } from "react-icons/si";
 
 interface FormField {
   label: string;
@@ -35,9 +37,10 @@ const Cosmetics: React.FC = () => {
     medicalConditions: '',
     restrictions: '',
     additionalInfo: '',
-    photo: null as File | null,
+    photo: null as File | null, 
   });
 
+  const [responseData, setResponseData] = useState('');
   const [error, setError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,23 +70,25 @@ const Cosmetics: React.FC = () => {
     data.append('file', formData.photo);
 
     try {
-      // const response = await fetch('http://52.188.219.37:8000/cosmetics/set_model_response_cosmetics', {
-      //   method: 'POST',
-      //   body: data,
-      //   headers: {
-      //     "Access-Control-Allow-Origin": "*"
-      //   }
-      // });
-      const response = await fetch('http://127.0.0.1:8000/cosmetics/set_model_response_cosmetics', {
+      const response = await fetch('http://4.156.213.56:8000/cosmetics/set_model_response_cosmetics', {
         method: 'POST',
         body: data,
         headers: {
           "Access-Control-Allow-Origin": "*"
         }
       });
+      // const response = await fetch('http://127.0.0.1:8000/cosmetics/set_model_response_cosmetics', {
+      //   method: 'POST',
+      //   body: data,
+      //   headers: {
+      //     "Access-Control-Allow-Origin": "*"
+      //   }
+      // });
 
       if (response.ok) {
-        console.log('Form submitted successfully');
+        const result = await response.json();
+        console.log('Form submitted successfully:', result);
+        setResponseData(result);
         setError('');
       } else {
         console.error('Form submission failed');
@@ -122,6 +127,14 @@ const Cosmetics: React.FC = () => {
           />
         </div>
         {error && <p className="text-red-500">{error}</p>}
+        {
+          responseData && (
+            <section className="flex flex-col gap-y-2 text-white">
+              <div className='flex items-center justify-center gap-x-2'><SiCodemagic /><h3 className='handjet text-bold text-2xl'>Response</h3></div>
+              <ReactMarkdown>{responseData}</ReactMarkdown>
+            </section>
+          )
+        }
         <button type="submit" className='btn btn-wide my-4 text-white'>Submit</button>
       </form>
     </section>
