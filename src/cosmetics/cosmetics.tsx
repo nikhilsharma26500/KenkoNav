@@ -67,9 +67,19 @@ const Cosmetics: React.FC = () => {
     data.append('file', formData.photo);
 
     try {
+      // const response = await fetch('http://52.188.219.37:8000/cosmetics/set_model_response_cosmetics', {
+      //   method: 'POST',
+      //   body: data,
+      //   headers: {
+      //     "Access-Control-Allow-Origin": "*"
+      //   }
+      // });
       const response = await fetch('http://127.0.0.1:8000/cosmetics/set_model_response_cosmetics', {
         method: 'POST',
         body: data,
+        headers: {
+          "Access-Control-Allow-Origin": "*"
+        }
       });
 
       if (response.ok) {

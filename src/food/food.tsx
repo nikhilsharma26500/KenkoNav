@@ -57,19 +57,19 @@ const Food: React.FC = () => {
     }
 
     const data = new FormData();
-    const dietaryDetails = {
-      allergies: formData.allergies,
-      medicalConditions: formData.medicalConditions,
-      dietaryRestrictions: formData.dietaryRestrictions,
-      additionalInfo: formData.additionalInfo,
-    };
-    data.append('dietaryDetails', new Blob([JSON.stringify(dietaryDetails)], { type: 'application/json' }));
+    data.append('category', 'food');
+    data.append('allergies', formData.allergies);
+    data.append('medicalConditions', formData.medicalConditions);
+    data.append('dietaryRestrictions', formData.dietaryRestrictions);
+    data.append('additionalInfo', formData.additionalInfo);
     data.append('file', formData.photo);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/food/set_model_response_food', {
+      const response = await fetch('https://backend-opcyioini-nikhil-sharmas-projects-ab433968.vercel.app/food/set_model_response_food', {
         method: 'POST',
         body: data,
+        mode: 'cors',
+        credentials: 'include', 
       });
 
       if (response.ok) {
