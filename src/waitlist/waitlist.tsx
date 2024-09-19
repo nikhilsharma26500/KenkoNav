@@ -9,9 +9,9 @@ type SignUpFormState = {
 
 
 const Waitlist = () => {
-    const PUBLIC_KEY: string | undefined = process.env.VITE_PUBLIC_KEY;
-    const SERVICE_ID: string | undefined = process.env.VITE_SERVICE_ID;
-    const TEMPLATE_ID: string | undefined = process.env.VITE_TEMPLATE_ID;
+    const PUBLIC_KEY: string | undefined = "8522DpHSGd_U-d0M4";
+    const SERVICE_ID: string | undefined = "service_i6rpj8a";
+    const TEMPLATE_ID: string | undefined = "template_2vtsz9h";
 
     const form = useRef<HTMLFormElement>(null);
 
