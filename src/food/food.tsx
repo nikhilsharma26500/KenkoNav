@@ -69,7 +69,7 @@ const Food: React.FC = () => {
 
     try {
       // Production URL
-      const response = await fetch('https://kenkonavbackend.vercel.app/food/set_model_response_food', {
+      const response = await fetch('https://kenkonav-backend.onrender.com/food/set_model_response_food', {
         method: 'POST',
         body: data,
         headers: {
