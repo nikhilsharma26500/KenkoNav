@@ -3,7 +3,7 @@ import emailjs from '@emailjs/browser';
 import toast, { Toaster } from 'react-hot-toast';
 import "../App.css";
 import ReactMarkdown from 'react-markdown';
-
+import {SlideShowData} from "./slideShowData"
 
 type SignUpFormState = {
     user_name: string;
@@ -12,22 +12,6 @@ type SignUpFormState = {
 
 
 const Waitlist = () => {
-
-    // TEMPORARY
-    const SlideShowData = [
-        {
-            heading: "slide 1",
-            info: ["text 1", "text 2", "text 3"],
-        },
-        {
-            heading: "slide 2",
-            info: ["text 1", "text 2", "text 3"],
-        },
-        {
-            heading: "slide 3",
-            info: ["text 1", "text 2", "text 3"],
-        },
-    ];
 
     const PUBLIC_KEY: string | undefined = "8522DpHSGd_U-d0M4";
     const SERVICE_ID: string | undefined = "service_i6rpj8a";

@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 // import App from './App.tsx'
 import Food from './food/food.tsx'
 import Cosmetics from './cosmetics/cosmetics.tsx'
-import Waitlist from './waitlist/waitlist.tsx'
+import Waitlist from './waitlist/waitlist_temp.tsx'
 import './index.css'
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
