@@ -1,3 +1,8 @@
+interface SlideData {
+    heading: string;
+    info: string[]
+}
+
 export const SlideShowData = [
   {
       heading: "slide 1",

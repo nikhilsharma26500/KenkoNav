@@ -70,13 +70,15 @@ const Cosmetics: React.FC = () => {
     data.append('file', formData.photo);
 
     try {
-      const response = await fetch('https://kenkonav-backend.onrender.com/cosmetics/set_model_response_cosmetics', {
+      const PRODUCTION_URL = import.meta.env.PRODUCTION_URL
+      const response = await fetch(`${PRODUCTION_URL}/cosmetics/set_model_response_cosmetics`, {
         method: 'POST',
         body: data,
         headers: {
           "Access-Control-Allow-Origin": "*"
         }
       });
+      
       // const response = await fetch('http://127.0.0.1:8000/cosmetics/set_model_response_cosmetics', {
       //   method: 'POST',
       //   body: data,

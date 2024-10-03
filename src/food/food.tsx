@@ -69,13 +69,15 @@ const Food: React.FC = () => {
 
     try {
       // Production URL
-      const response = await fetch('https://kenkonav-backend.onrender.com/food/set_model_response_food', {
+      const PRODUCTION_URL = import.meta.env.VITE_PRODUCTION_URL
+      const response = await fetch(`${PRODUCTION_URL}/food/set_model_response_food`, {
         method: 'POST',
         body: data,
         headers: {
           "Access-Control-Allow-Origin": "*"
         }
       });
+
       // Localhost URL
       // const response = await fetch('http://127.0.0.1:8000/food/set_model_response_food', {
       //   method: 'POST',
