@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import emailjs from '@emailjs/browser';
 import toast, { Toaster } from 'react-hot-toast';
 import "../App.css";
+import { Analytics } from "@vercel/analytics/react"
 
 type SignUpFormState = {
     user_name: string;
@@ -10,9 +11,9 @@ type SignUpFormState = {
 
 
 const Waitlist = () => {
-    const PUBLIC_KEY: string | undefined = "8522DpHSGd_U-d0M4";
-    const SERVICE_ID: string | undefined = "service_i6rpj8a";
-    const TEMPLATE_ID: string | undefined = "template_2vtsz9h";
+    const PUBLIC_KEY: string | undefined = import.meta.env.VITE_PUBLIC_ID;
+    const SERVICE_ID: string | undefined = import.meta.env.VITE_SERVICE_ID
+    const TEMPLATE_ID: string | undefined = import.meta.env.VITE_TEMPLATE_ID
 
     const form = useRef<HTMLFormElement>(null);
 
@@ -63,6 +64,7 @@ const Waitlist = () => {
 
     return (
         <section className='flex flex-col justify-center items-center text-center h-screen font-mono'>
+            <Analytics/>
             <div>
                 <Toaster
                     position="bottom-center"

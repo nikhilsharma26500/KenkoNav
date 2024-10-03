@@ -10,17 +10,41 @@ interface FormField {
 }
 
 const formFields: FormField[] = [
-  { label: "Allergies", name: "allergies", type: "text", placeholder: "Allergies" },
-  { label: "Medical Conditions", name: "medicalConditions", type: "text", placeholder: "Medical Conditions" },
-  { label: "Dietary Restrictions", name: "dietaryRestrictions", type: "text", placeholder: "Dietary Restrictions" },
-  { label: "Additional Info", name: "additionalInfo", type: "text", placeholder: "Additional Info" },
+  {
+    label: "Allergies",
+    name: "allergies",
+    type: "text",
+    placeholder: "Allergies",
+  },
+  {
+    label: "Medical Conditions",
+    name: "medicalConditions",
+    type: "text",
+    placeholder: "Medical Conditions",
+  },
+  {
+    label: "Dietary Restrictions",
+    name: "dietaryRestrictions",
+    type: "text",
+    placeholder: "Dietary Restrictions",
+  },
+  {
+    label: "Additional Info",
+    name: "additionalInfo",
+    type: "text",
+    placeholder: "Additional Info",
+  },
 ];
 
-const InputField: React.FC<{ field: FormField; value: string; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }> = ({ field, value, onChange }) => (
+const InputField: React.FC<{
+  field: FormField;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}> = ({ field, value, onChange }) => (
   <div className="sm:flex sm:items-center sm:justify-between sm:w-[50%] sm:space-y-0 space-y-2">
     <label htmlFor={field.name}>{field.label}</label>
     <input
-      className='input input-bordered max-w-xs'
+      className="input input-bordered max-w-xs"
       type={field.type}
       name={field.name}
       id={field.name}
@@ -33,19 +57,19 @@ const InputField: React.FC<{ field: FormField; value: string; onChange: (e: Reac
 
 const Food: React.FC = () => {
   const [formData, setFormData] = useState({
-    allergies: '',
-    medicalConditions: '',
-    dietaryRestrictions: '',
-    additionalInfo: '',
+    allergies: "",
+    medicalConditions: "",
+    dietaryRestrictions: "",
+    additionalInfo: "",
     photo: null as File | null,
   });
-
-  const [responseData, setResponseData] = useState('');
-  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [responseData, setResponseData] = useState("");
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
-    if (name === 'photo' && files) {
+    if (name === "photo" && files) {
       setFormData({ ...formData, photo: files[0] });
     } else {
       setFormData({ ...formData, [name]: value });
@@ -55,27 +79,33 @@ const Food: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formData.photo) {
-      setError('Photo is required');
+      setError("Photo is required");
       return;
     }
 
     const data = new FormData();
-    data.append('category', 'food');
-    data.append('allergies', formData.allergies);
-    data.append('medicalConditions', formData.medicalConditions);
-    data.append('dietaryRestrictions', formData.dietaryRestrictions);
-    data.append('additionalInfo', formData.additionalInfo);
-    data.append('file', formData.photo);
+    data.append("category", "food");
+    data.append("allergies", formData.allergies);
+    data.append("medicalConditions", formData.medicalConditions);
+    data.append("dietaryRestrictions", formData.dietaryRestrictions);
+    data.append("additionalInfo", formData.additionalInfo);
+    data.append("file", formData.photo);
 
     try {
       // Production URL
-      const response = await fetch('https://kenkonav-backend.onrender.com/food/set_model_response_food', {
-        method: 'POST',
-        body: data,
-        headers: {
-          "Access-Control-Allow-Origin": "*"
+      setLoading(true);
+      const PRODUCTION_URL = import.meta.env.VITE_PRODUCTION_URL;
+      const response = await fetch(
+        `${PRODUCTION_URL}/food/set_model_response_food`,
+        {
+          method: "POST",
+          body: data,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
         }
-      });
+      );
+
       // Localhost URL
       // const response = await fetch('http://127.0.0.1:8000/food/set_model_response_food', {
       //   method: 'POST',
@@ -87,16 +117,18 @@ const Food: React.FC = () => {
 
       if (response.ok) {
         const result = await response.json();
-        console.log('Form submitted successfully:', result);
+        console.log("Form submitted successfully:", result);
         setResponseData(result);
-        setError('');
+        setError("");
       } else {
-        console.error('Form submission failed');
-        setError('Form submission failed');
+        console.error("Form submission failed");
+        setError("Form submission failed");
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      setError('Error submitting form');
+      console.error("Error submitting form:", error);
+      setError("Error submitting form");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -105,19 +137,34 @@ const Food: React.FC = () => {
       <div className="gap-y-10">
         <span className="flex flex-row justify-center items-start w-full gap-x-4">
           <h1 className="handjet text-6xl font-bold">KenkoNav</h1>
-          <div className="rounded-full bg-indigo-500 px-2 text-lg handjet font-bold">Food</div>
+          <div className="rounded-full bg-indigo-500 px-2 text-lg handjet font-bold">
+            Food
+          </div>
         </span>
-        <h3 className="sm:text-xl text-md">Please fill the below columns and upload the ingredients image in the form below</h3>
+        <h3 className="sm:text-xl text-md">
+          Please fill the below columns and upload the ingredients image in the
+          form below
+        </h3>
       </div>
 
-      <form className='flex flex-col gap-y-4 w-[60%] items-center justify-around' onSubmit={handleSubmit}>
+      <form
+        className="flex flex-col gap-y-4 w-[60%] items-center justify-around"
+        onSubmit={handleSubmit}
+      >
         {formFields.map((field) => (
-          <InputField key={field.name} field={field} value={formData[field.name as keyof typeof formData] as string} onChange={handleChange} />
+          <InputField
+            key={field.name}
+            field={field}
+            value={formData[field.name as keyof typeof formData] as string}
+            onChange={handleChange}
+          />
         ))}
         <div className="sm:flex sm:items-center sm:justify-between sm:w-[50%] sm:space-y-0 space-y-2">
-          <label htmlFor="photo-upload">Upload Photos<span className="text-red-500">*</span></label>
+          <label htmlFor="photo-upload">
+            Upload Photos<span className="text-red-500">*</span>
+          </label>
           <input
-            className='file-input file-input-bordered max-w-xs'
+            className="file-input file-input-bordered max-w-xs"
             type="file"
             name="photo"
             id="photo-upload"
@@ -127,15 +174,22 @@ const Food: React.FC = () => {
           />
         </div>
         {error && <p className="text-red-500">{error}</p>}
-        {
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
           responseData && (
             <section className="flex flex-col gap-y-2 text-white">
-              <div className='flex items-center justify-center gap-x-2'><SiCodemagic /><h3 className='handjet text-bold text-2xl'>Response</h3></div>
+              <div className="flex items-center justify-center gap-x-2">
+                <SiCodemagic />
+                <h3 className="handjet text-bold text-2xl">Response</h3>
+              </div>
               <ReactMarkdown>{responseData}</ReactMarkdown>
             </section>
           )
-        }
-        <button type="submit" className='btn btn-wide my-4 text-white'>Submit</button>
+        )}
+        <button type="submit" className="btn btn-wide my-4 text-white">
+          Submit
+        </button>
       </form>
     </section>
   );
