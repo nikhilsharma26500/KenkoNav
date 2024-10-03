@@ -21,10 +21,8 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         {/* <Route path="/" element={<Navigate to="/waitlist"/>}/> */}
         <Route path='/' element={<App />} />
-        {/* <Route path="/food" element={<Food />} />
-        <Route path="/cosmetics" element={<Cosmetics />} /> */}
-        <Route path="/demo/food" element={<Food />} />
-        <Route path="/demo/cosmetics" element={<Cosmetics />} />
+        <Route path="/food" element={<Food />} />
+        <Route path="/cosmetics" element={<Cosmetics />} />
         <Route path="/waitlist" element={<Waitlist />} />
         <Route path='/main_waitlist' element={<WaitlistMain/>} />
       </Routes>
