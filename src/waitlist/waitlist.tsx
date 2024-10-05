@@ -3,7 +3,7 @@ import emailjs from "@emailjs/browser";
 import toast, { Toaster } from "react-hot-toast";
 import "../App.css";
 import ReactMarkdown from "react-markdown";
-import { SlideShowData, PriceData } from "./slideShowData";
+import { SlideShowData, PriceDataMonthly, PriceDataAnnually } from "./slideShowData";
 
 type SignUpFormState = {
   user_name: string;
@@ -90,6 +90,10 @@ const Waitlist = () => {
             <h2 className="text-center sm:text-[50px] text-[50px] handjet">
               Waitlist
             </h2>
+
+            <p>
+              Be the first to discover what is in your food!
+            </p>
           </div>
 
           <div>
@@ -132,14 +136,13 @@ const Waitlist = () => {
         </section>
       </div>
 
-      <div className="container border-2">
-        {/* Card to explain about the price segments */}
+      <div className="container">
         <h1 className="handjet text-[75px] font-bold">
-            Pricing
+          Pricing
         </h1>
 
         <div>
-          {PriceData.map((item, index) => (
+          {PriceDataMonthly.map((item, index) => (
             <div key={index}>
               <h1>{item.heading}</h1>
               <ul>
