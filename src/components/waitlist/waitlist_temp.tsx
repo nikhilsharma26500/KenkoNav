@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import emailjs from '@emailjs/browser';
 import toast, { Toaster } from 'react-hot-toast';
-import "../App.css";
+import "../../App.css";
 import { Analytics } from "@vercel/analytics/react"
 
 type SignUpFormState = {
