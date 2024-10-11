@@ -11,3 +11,8 @@
 body {
     font-family: 'Roboto Mono', monospace;
 }
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}

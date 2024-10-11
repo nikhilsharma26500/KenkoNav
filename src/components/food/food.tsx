@@ -9,6 +9,14 @@ interface FormField {
   placeholder: string;
 }
 
+interface FormData {
+  allergies: string;
+  medicalConditions: string;
+  dietaryRestrictions: string;
+  additionalInfo: string;
+  photo: File | null;
+}
+
 const formFields: FormField[] = [
   {
     label: "Allergies",
@@ -23,10 +31,10 @@ const formFields: FormField[] = [
     placeholder: "Medical Conditions",
   },
   {
-    label: "Restrictions",
-    name: "restrictions",
+    label: "Dietary Restrictions",
+    name: "dietaryRestrictions",
     type: "text",
-    placeholder: "Restrictions",
+    placeholder: "Dietary Restrictions",
   },
   {
     label: "Additional Info",
@@ -41,10 +49,10 @@ const InputField: React.FC<{
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }> = ({ field, value, onChange }) => (
-  <div className="sm:flex sm:items-center sm:justify-between sm:w-[50%] sm:space-y-0 space-y-2">
-    <label htmlFor={field.name}>{field.label}</label>
+  <div className="sm:flex sm:items-center sm:justify-between sm:w-full sm:space-y-0 space-y-2">
+    <label htmlFor={field.name} className="sm:w-1/3 text-left">{field.label}</label>
     <input
-      className="input input-bordered max-w-xs"
+      className="input input-bordered w-full sm:w-2/3"
       type={field.type}
       name={field.name}
       id={field.name}
@@ -55,11 +63,11 @@ const InputField: React.FC<{
   </div>
 );
 
-const Cosmetics: React.FC = () => {
+const Food: React.FC = () => {
   const [formData, setFormData] = useState({
     allergies: "",
     medicalConditions: "",
-    restrictions: "",
+    dietaryRestrictions: "",
     additionalInfo: "",
     photo: null as File | null,
   });
@@ -84,23 +92,19 @@ const Cosmetics: React.FC = () => {
     }
 
     const data = new FormData();
-    const dietaryDetails = {
-      allergies: formData.allergies,
-      medicalConditions: formData.medicalConditions,
-      restrictions: formData.restrictions,
-      additionalInfo: formData.additionalInfo,
-    };
-    data.append(
-      "dietaryDetails",
-      new Blob([JSON.stringify(dietaryDetails)], { type: "application/json" })
-    );
+    data.append("category", "food");
+    data.append("allergies", formData.allergies);
+    data.append("medicalConditions", formData.medicalConditions);
+    data.append("dietaryRestrictions", formData.dietaryRestrictions);
+    data.append("additionalInfo", formData.additionalInfo);
     data.append("file", formData.photo);
 
     try {
+      // Production URL
       setLoading(true);
-      const PRODUCTION_URL = import.meta.env.PRODUCTION_URL;
+      const PRODUCTION_URL = import.meta.env.VITE_PRODUCTION_URL;
       const response = await fetch(
-        `${PRODUCTION_URL}/cosmetics/set_model_response_cosmetics`,
+        `${PRODUCTION_URL}/food/set_model_response_food`,
         {
           method: "POST",
           body: data,
@@ -110,7 +114,8 @@ const Cosmetics: React.FC = () => {
         }
       );
 
-      // const response = await fetch('http://127.0.0.1:8000/cosmetics/set_model_response_cosmetics', {
+      // Localhost URL
+      // const response = await fetch('http://127.0.0.1:8000/food/set_model_response_food', {
       //   method: 'POST',
       //   body: data,
       //   headers: {
@@ -136,38 +141,38 @@ const Cosmetics: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center items-center h-screen text-center gap-y-10 mx-auto container px-5 sm:px-0">
+    <section className="flex flex-col justify-center items-center min-h-screen py-10 text-center gap-y-10 mx-auto container px-5 sm:px-0">
       <div className="gap-y-10">
         <span className="flex flex-row justify-center items-start w-full gap-x-4">
           <h1 className="handjet text-6xl font-bold">KenkoNav</h1>
           <div className="rounded-full bg-indigo-500 px-2 text-lg handjet font-bold">
-            Cosmetics
+            Food
           </div>
         </span>
-        <h3 className="sm:text-xl text-md">
+        <h3 className="sm:text-xl text-md mt-4">
           Please fill the below columns and upload the ingredients image in the
           form below
         </h3>
       </div>
 
       <form
-        className="flex flex-col gap-y-4 w-[60%] items-center justify-around"
+        className="flex flex-col gap-y-4 w-full max-w-2xl items-center justify-around"
         onSubmit={handleSubmit}
       >
         {formFields.map((field) => (
           <InputField
             key={field.name}
             field={field}
-            value={formData[field.name as keyof typeof formData] as string}
+            value={formData[field.name as keyof FormData] as string}
             onChange={handleChange}
           />
         ))}
-        <div className="sm:flex sm:items-center sm:justify-between sm:w-[50%] sm:space-y-0 space-y-2">
-          <label htmlFor="photo-upload">
+        <div className="sm:flex sm:items-center sm:justify-between w-full sm:space-y-0 space-y-2">
+          <label htmlFor="photo-upload" className="sm:w-1/3 text-left">
             Upload Photos<span className="text-red-500">*</span>
           </label>
           <input
-            className="file-input file-input-bordered max-w-xs"
+            className="file-input file-input-bordered w-full sm:w-2/3"
             type="file"
             name="photo"
             id="photo-upload"
@@ -177,25 +182,28 @@ const Cosmetics: React.FC = () => {
           />
         </div>
         {error && <p className="text-red-500">{error}</p>}
-        {loading ? (
-          <p className="text-blue-500">Loading...</p>
-        ) : (
-          responseData && (
-            <section className="flex flex-col gap-y-2 text-white">
-              <div className="flex items-center justify-center gap-x-2">
-                <SiCodemagic />
-                <h3 className="handjet text-bold text-2xl">Response</h3>
-              </div>
-              <ReactMarkdown>{responseData}</ReactMarkdown>
-            </section>
-          )
-        )}
         <button type="submit" className="btn btn-wide my-4 text-white">
           Submit
         </button>
       </form>
+
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        responseData && (
+          <section className="flex flex-col gap-y-2 text-white mt-8 w-full max-w-2xl">
+            <div className="flex items-center justify-center gap-x-2">
+              <SiCodemagic />
+              <h3 className="handjet text-bold text-2xl">Response</h3>
+            </div>
+            <div className="bg-gray-800 p-4 rounded-lg">
+              <ReactMarkdown>{responseData}</ReactMarkdown>
+            </div>
+          </section>
+        )
+      )}
     </section>
   );
 };
 
-export default Cosmetics;
+export default Food;
