@@ -1,4 +1,4 @@
-import Link from 'next/link';
+// import Link from 'next/link';
 
 const footer = () => {
     return (
@@ -8,12 +8,12 @@ const footer = () => {
                     &copy; 2024 KenkoNav. All rights reserved.
                 </p>
                 <nav className="flex gap-4 mt-4 sm:mt-0">
-                    <Link className="text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" href="#">
+                    {/* <Link className="text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" href="#"> */}
                         Privacy Policy
-                    </Link>
-                    <Link className="text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" href="#">
+                    {/* </Link> */}
+                    {/* <Link className="text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100" href="#"> */}
                         Terms of Service
-                    </Link>
+                    {/* </Link> */}
                 </nav>
             </div>
         </footer>
