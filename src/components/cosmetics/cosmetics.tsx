@@ -92,7 +92,7 @@ const Cosmetics: React.FC = () => {
     }
 
     const data = new FormData();
-    data.append("category", "food");
+    data.append("category", "cosmetics");
     data.append("allergies", formData.allergies);
     data.append("medicalConditions", formData.medicalConditions);
     data.append("restrictions", formData.restrictions);
@@ -101,7 +101,7 @@ const Cosmetics: React.FC = () => {
 
     try {
       setLoading(true);
-      const PRODUCTION_URL = import.meta.env.PRODUCTION_URL;
+      const PRODUCTION_URL = import.meta.env.VITE_PRODUCTION_URL;
       const response = await fetch(
         `${PRODUCTION_URL}/cosmetics/set_model_response_cosmetics`,
         {
