@@ -1,48 +1,29 @@
 const SlideShowData = [
   {
-      heading: "KenkoNav",
-      info: ["text 1", "text 2", "text 3"],
+      heading: "What is KenkoNav?",
+      info: [
+        "Live healthy",
+        "Find whats in your food",
+        "Find whats in your cosmetics"
+      ],
   },
   {
       heading: "Discover what is in your food!",
-      info: ["text 1", "text 2", "text 3"],
+      info: [
+        "Healthy", 
+        "Toxins", 
+        "All research based"
+      ],
   },
   {
       heading: "Discover what is in your cosmetics!",
-      info: ["text 1", "text 2", "text 3"],
+      info: [
+        "Healthy", 
+        "Harmful Chemicals", 
+        "All research based"
+      ],
   },
 ];
-
-const PriceDataMonthly = [
-    {
-        heading: "Students",
-        info: ["text 1", "text 2", "text 3"],
-    },
-    {
-        heading: "slide 2",
-        info: ["text 1", "text 2", "text 3"],
-    },
-    {
-        heading: "slide 3",
-        info: ["text 1", "text 2", "text 3"],
-    },
-];
-
-const PriceDataAnnually = [
-    {
-        heading: "Students",
-        info: ["text 1", "text 2", "text 3"],
-    },
-    {
-        heading: "slide 2",
-        info: ["text 1", "text 2", "text 3"],
-    },
-    {
-        heading: "slide 3",
-        info: ["text 1", "text 2", "text 3"],
-    },
-];
-
 
 interface Plans {
   title: string,
@@ -54,35 +35,34 @@ interface Plans {
   iconColor: string
 }
 
-const Plans: Plans[] = [
+const PlansMonthly: Plans[] = [
     {
       title: "Students",
       price: "$5/month",
       features: [
-        "10 deploys per day",
-        "10 GB of storage",
-        "Unlimited domains",
-        "SSL Certificates",
+        "A",
+        "B",
+        "C",
+        "D",  
       ],
-      buttonText: "Start for free",
+      buttonText: "Get started",
       buttonColor: "bg-gray-800 hover:bg-gray-900",
       iconBgColor: "bg-blue-gray-50",
       iconColor: "text-gray-600",
     },
     {
-      title: "For your team",
-      price: "$39",
+      title: "Regular",
+      price: "$15/month",
       features: [
-        "Unlimited deploys",
-        "Up to 10 Team Members",
-        "100 GB of storage",
-        "24/7 support",
-        "Global CDN",
+        "A",
+        "B",
+        "C",
+        "D",  
       ],
       buttonText: "Get started",
-      buttonColor: "bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700",
-      iconBgColor: "bg-indigo-50",
-      iconColor: "text-deep-purple-accent-400",
+      buttonColor: "bg-gray-800 hover:bg-gray-900",
+      iconBgColor: "bg-blue-gray-50",
+      iconColor: "text-gray-600",
     },
   ];
   
@@ -91,4 +71,4 @@ const Plans: Plans[] = [
 
 
 
-export { SlideShowData, PriceDataMonthly, PriceDataAnnually, Plans };
+export { SlideShowData, PlansMonthly };

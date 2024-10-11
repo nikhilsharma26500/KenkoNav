@@ -2,14 +2,24 @@ import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import toast, { Toaster } from "react-hot-toast";
 import "../../App.css";
+import { PiStudentBold } from "react-icons/pi";
 import ReactMarkdown from "react-markdown";
-import { SlideShowData, Plans } from "./slideShowData";
-// import {Card} from "../ui/card"
+import { SlideShowData, PlansMonthly } from "./slideShowData";
 
 type SignUpFormState = {
   user_name: string;
   user_email: string;
 };
+
+interface Plans {
+  title: string,
+  price: string,
+  features: string[],
+  buttonText: string,
+  buttonColor: string,
+  iconBgColor: string,
+  iconColor: string
+}
 
 const Waitlist: React.FC = () => {
   const PUBLIC_KEY: string | undefined = import.meta.env.VITE_PUBLIC_ID;
@@ -71,7 +81,7 @@ const Waitlist: React.FC = () => {
         <section className="md:w-2/3 mb-8 md:mb-0">
           {SlideShowData.map((item, index) => (
             <div key={index} className="mb-6">
-              <h2 className="text-2xl font-bold mb-2">{item.heading}</h2>
+              <h2 className="text-2xl font-bold">{item.heading}</h2>
               <ul className="list-disc list-inside">
                 {item.info.map((content, index) => (
                   <li key={index} className="mb-1">
@@ -140,7 +150,7 @@ const Waitlist: React.FC = () => {
         </h1>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {Plans.map((plan, index) => (
+          {PlansMonthly.map((plan, index) => (
             <PlanCard key={index} plan={plan} />
           ))}
         </div>
@@ -159,10 +169,10 @@ const PlanCard: React.FC<{ plan: Plans }> = ({ plan }) => (
           </p>
           <p className="text-4xl font-extrabold">{plan.price}</p>
         </div>
-        <div
+        {/*<div
           className={`flex items-center justify-center w-16 h-16 rounded-full ${plan.iconBgColor}`}
         >
-          <svg
+           <svg
             className={`w-8 h-8 ${plan.iconColor}`}
             viewBox="0 0 24 24"
             strokeLinecap="round"
@@ -178,8 +188,9 @@ const PlanCard: React.FC<{ plan: Plans }> = ({ plan }) => (
               fill="none"
               stroke="currentColor"
             />
-          </svg>
-        </div>
+          </svg> 
+        </div>*/}
+          <PiStudentBold />
       </div>
       <div>
         <p className="mb-2 font-bold tracking-wide">Features</p>
