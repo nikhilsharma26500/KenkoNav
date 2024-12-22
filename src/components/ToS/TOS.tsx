@@ -1,10 +1,10 @@
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { tosContent } from './tos.ts'
 
 const TermsOfService = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <Link className="hover:underline" href="/">
+      <Link className="hover:underline" to="/">
         <h1 className="handjet text-6xl font-bold text-center">KenkoNav</h1>
       </Link>
       <h1 className="text-4xl font-semibold text-center mb-4">Terms of Service</h1>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { SiCodemagic } from "react-icons/si";
-import Link from "next/link";
+import { Link } from 'react-router-dom'
 
 interface FormField {
   label: string;
@@ -143,7 +143,7 @@ const Cosmetics: React.FC = () => {
     <section className="flex flex-col justify-center items-center min-h-screen py-10 text-center gap-y-10 mx-auto container px-5 sm:px-0">
       <div className="gap-y-10">
         <span className="flex flex-row justify-center items-start w-full gap-x-4">
-        <Link className="hover:underline" href="/">
+        <Link className="hover:underline" to="/">
           <h1 className="handjet text-6xl font-bold">KenkoNav</h1>
         </Link>
           <div className="rounded-full bg-indigo-500 px-2 text-lg handjet font-bold">
