@@ -6,6 +6,8 @@ import Cosmetics from './components/cosmetics/cosmetics.tsx'
 import Waitlist from './components/waitlist/waitlist_temp.tsx'
 import WaitlistMain from './components/waitlist/waitlist.tsx'
 import Layout from './layout.tsx'
+import TOS from './components/ToS/TOS.tsx'
+import PP from './components/ToS/PP.tsx'
 import './index.css'
 import { Analytics } from "@vercel/analytics/react"
 import {
@@ -28,6 +30,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/waitlist" element={<Waitlist />} />
         <Route path='/main_waitlist' element={<WaitlistMain/>} />
         <Route path='*' element={<App />} />
+        <Route path='/tos' element={<TOS />} />
+        <Route path='/privacy_policy' element={<PP />} />
       </Routes>
       </Layout>
     </Router>
