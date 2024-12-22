@@ -1,29 +1,33 @@
 const SlideShowData = [
-  {
+  { 
+      slide: 1,
       heading: "What is KenkoNav?",
       info: [
-        "Live healthy",
-        "Find whats in your food",
-        "Find whats in your cosmetics"
+        "A platform designed to empower healthier lifestyle choices",
+        "Upload or input ingredient details for your food and cosmetics",
+        "Get AI-driven, personalized insights based on your health needs"
       ],
   },
   {
-      heading: "Discover what is in your food!",
+      slide: 2,
+      heading: "Analyze Your Food Ingredients",
       info: [
-        "Healthy", 
-        "Toxins", 
-        "All research based"
+        "Upload a photo of the ingredients list or manually input the details",
+        "AI analyzes ingredients for their nutritional value and potential toxins",
+        "Receive personalized feedback based on your dietary restrictions, allergies, and medical conditions"
       ],
   },
   {
-      heading: "Discover what is in your cosmetics!",
+      slide: 3,
+      heading: "Evaluate Your Cosmetics for Safety",
       info: [
-        "Healthy", 
-        "Harmful Chemicals", 
-        "All research based"
+        "Upload ingredient details of your cosmetic products",
+        "Identify harmful chemicals and assess the overall safety of your products",
+        "Receive science-backed recommendations tailored to your skin type and sensitivities"
       ],
   },
 ];
+
 
 interface Plans {
   title: string,

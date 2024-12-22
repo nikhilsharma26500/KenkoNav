@@ -1,243 +1,137 @@
-import React, { useRef, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import toast, { Toaster } from "react-hot-toast";
-import "../../App.css";
-import { PiStudentBold } from "react-icons/pi";
 import ReactMarkdown from "react-markdown";
-import { SlideShowData, PlansMonthly } from "./slideShowData";
+import { SlideShowData } from "./slideShowData";
 
 type SignUpFormState = {
   user_name: string;
   user_email: string;
 };
 
-interface Plans {
-  title: string,
-  price: string,
-  features: string[],
-  buttonText: string,
-  buttonColor: string,
-  iconBgColor: string,
-  iconColor: string
-}
-
 const Waitlist: React.FC = () => {
-  const PUBLIC_KEY: string | undefined = import.meta.env.VITE_PUBLIC_ID;
-  const SERVICE_ID: string | undefined = import.meta.env.VITE_SERVICE_ID;
-  const TEMPLATE_ID: string | undefined = import.meta.env.VITE_TEMPLATE_ID;
-
   const form = useRef<HTMLFormElement>(null);
-
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [formData, setFormData] = useState<SignUpFormState>({
     user_name: "",
     user_email: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) =>
+        prev === SlideShowData.length - 1 ? 0 : prev + 1
+      );
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
-  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const allFieldsFilled = formData.user_name && formData.user_email;
-
-    if (!allFieldsFilled) {
-      toast.error("Please fill in all the information!");
+    if (!formData.user_name || !formData.user_email) {
+      toast.error("Please fill in all fields");
       return;
     }
 
+    const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_ID;
+    const SERVICE_ID = import.meta.env.VITE_SERVICE_ID;
+    const TEMPLATE_ID = import.meta.env.VITE_TEMPLATE_ID;
+
     if (form.current && SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY) {
       emailjs
-        .sendForm(SERVICE_ID, TEMPLATE_ID, form.current, {
-          publicKey: PUBLIC_KEY,
-        })
+        .sendForm(SERVICE_ID, TEMPLATE_ID, form.current, { publicKey: PUBLIC_KEY })
         .then(
-          (result) => {
-            console.log("Email sent successfully!", result);
-            toast.success("You have been added to the waitlist! 😎");
+          () => {
+            toast.success("Successfully joined waitlist");
             setFormData({ user_name: "", user_email: "" });
             if (form.current) form.current.reset();
           },
-          (error) => {
-            toast.error("Failed to send email. Please try again later.");
-            console.log({ Error: error });
-          }
+          () => toast.error("Failed to join waitlist")
         );
-    } else {
-      toast.error("Missing configuration. Please check your environment variables.");
     }
   };
 
   return (
-    <section className="min-h-screen w-full">
-      <div className="mx-auto flex flex-col md:flex-row justify-center items-center text-center sm:container font-mono py-8">
-        <Toaster position="bottom-center" reverseOrder={false} />
+    <div className="min-h-screen flex items-center justify-center p-6 bg-gray-50 text-gray-800">
+      <Toaster position="bottom-center" />
+      <div className="w-full max-w-4xl grid md:grid-cols-3 gap-12">
 
-        <section className="md:w-2/3 mb-8 md:mb-0">
-          {SlideShowData.map((item, index) => (
-            <div key={index} className="mb-6">
-              <h2 className="text-2xl font-bold">{item.heading}</h2>
-              <ul className="list-disc list-inside">
-                {item.info.map((content, index) => (
-                  <li key={index} className="mb-1">
-                    <ReactMarkdown>{content}</ReactMarkdown>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </section>
-
-        <section className="md:w-1/3 flex flex-col justify-center items-center">
-          <div className="mb-6">
-            <h1 className="text-center font-bold text-6xl md:text-7xl handjet mb-2">
-              KenkoNav
-            </h1>
-            <h2 className="text-center text-4xl md:text-5xl handjet mb-4">
-              Waitlist
-            </h2>
-            <p className="text-lg">
-              Be the first to discover what is in your food!
-            </p>
+        {/* Info Section */}
+        <div className="md:col-span-2 space-y-6">
+          <div className="h-64 overflow-hidden relative">
+            {SlideShowData.map((slide, index) => (
+              <div
+                key={index}
+                className={`absolute top-0 left-0 w-full transition-opacity duration-500 ${
+                  index === currentSlide ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                <h2 className="text-3xl handjet font-semibold mb-2">{slide.heading}</h2>
+                <ul className="space-y-1">
+                  {slide.info.map((content, idx) => (
+                    <li key={idx} className="text-sm text-gray-600">
+                      <ReactMarkdown>{content}</ReactMarkdown>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-
-          <form
-            ref={form}
-            onSubmit={sendEmail}
-            className="flex flex-col gap-y-4 w-full max-w-md"
-          >
-            <label className="input input-bordered flex items-center gap-2">
-              <input
-                type="text"
-                className="grow"
-                name="user_name"
-                value={formData.user_name}
-                onChange={handleInputChange}
-                placeholder="Name"
-                required
+          <div className="flex gap-2 justify-center">
+            {SlideShowData.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-3 h-3 rounded-full transition-colors ${
+                  index === currentSlide ? "bg-gray-800" : "bg-gray-300"
+                }`}
               />
-            </label>
-            <label className="input input-bordered flex items-center gap-2">
-              <input
-                type="email"
-                className="grow"
-                name="user_email"
-                value={formData.user_email}
-                onChange={handleInputChange}
-                placeholder="Email"
-                required
-              />
-            </label>
+            ))}
+          </div>
+        </div>
 
+        {/* Form Section */}
+        <div className="md:col-span-1 space-y-6">
+          <div className="text-center">
+            <h1 className="font-bold mb-1 handjet text-6xl">KenkoNav</h1>
+            <p className="text-sm text-gray-500">Discover what's in your food</p>
+          </div>
+          <form ref={form} onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              name="user_name"
+              value={formData.user_name}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, user_name: e.target.value }))
+              }
+              placeholder="Name"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+              required
+            />
+            <input
+              type="email"
+              name="user_email"
+              value={formData.user_email}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, user_email: e.target.value }))
+              }
+              placeholder="Email"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+              required
+            />
             <button
-              className="btn bg-slate-300 text-black hover:bg-slate-800 hover:text-white"
               type="submit"
+              className="w-full p-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
             >
-              Join Waitlist! 🎉
+              Join Waitlist
             </button>
           </form>
-        </section>
-      </div>
-
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="handjet text-5xl md:text-6xl font-bold text-center mb-8">
-          Pricing
-        </h1>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          {PlansMonthly.map((plan, index) => (
-            <PlanCard key={index} plan={plan} />
-          ))}
         </div>
+
       </div>
-    </section>
+    </div>
   );
 };
-
-const PlanCard: React.FC<{ plan: Plans }> = ({ plan }) => (
-  <div className="flex flex-col justify-between p-5 bg-white border rounded shadow-sm">
-    <div className="mb-6">
-      <div className="flex items-center justify-between pb-6 mb-6 border-b">
-        <div>
-          <p className="text-sm font-bold tracking-wider uppercase">
-            {plan.title}
-          </p>
-          <p className="text-4xl font-extrabold">{plan.price}</p>
-        </div>
-        {/*<div
-          className={`flex items-center justify-center w-16 h-16 rounded-full ${plan.iconBgColor}`}
-        >
-           <svg
-            className={`w-8 h-8 ${plan.iconColor}`}
-            viewBox="0 0 24 24"
-            strokeLinecap="round"
-            strokeWidth="2"
-          >
-            <path
-              d="M12,7L12,7 c-1.657,0-3-1.343-3-3v0c0-1.657,1.343-3,3-3h0c1.657,0,3,1.343,3,3v0C15,5.657,13.657,7,12,7z"
-              fill="none"
-              stroke="currentColor"
-            />
-            <path
-              d="M15,23H9v-5H7v-6 c0-1.105,0.895-2,2-2h6c1.105,0,2,0.895,2,2v6h-2V23z"
-              fill="none"
-              stroke="currentColor"
-            />
-          </svg> 
-        </div>*/}
-          <PiStudentBold />
-      </div>
-      <div>
-        <p className="mb-2 font-bold tracking-wide">Features</p>
-        <ul className="space-y-2">
-          {plan.features.map((feature, index) => (
-            <li key={index} className="flex items-center">
-              <div className="mr-2">
-                <svg
-                  className="w-4 h-4 text-deep-purple-accent-400"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                >
-                  <polyline
-                    fill="none"
-                    stroke="currentColor"
-                    points="6,12 10,16 18,8"
-                  />
-                  <circle
-                    cx="12"
-                    cy="12"
-                    fill="none"
-                    r="11"
-                    stroke="currentColor"
-                  />
-                </svg>
-              </div>
-              <p className="font-medium text-gray-800">{feature}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-    <div>
-      <a
-        href="/"
-        className={`inline-flex items-center justify-center w-full h-12 px-6 mb-4 font-medium tracking-wide text-white transition duration-200 rounded shadow-md ${plan.buttonColor} focus:shadow-outline focus:outline-none`}
-      >
-        {plan.buttonText}
-      </a>
-      <p className="text-sm text-gray-600">
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium
-      </p>
-    </div>
-  </div>
-);
-
 
 export default Waitlist;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { SiCodemagic } from "react-icons/si";
+import { Link } from 'react-router-dom'
 
 interface FormField {
   label: string;
@@ -144,7 +145,9 @@ const Food: React.FC = () => {
     <section className="flex flex-col justify-center items-center min-h-screen py-10 text-center gap-y-10 mx-auto container px-5 sm:px-0">
       <div className="gap-y-10">
         <span className="flex flex-row justify-center items-start w-full gap-x-4">
+        <Link className="hover:underline" to="/">
           <h1 className="handjet text-6xl font-bold">KenkoNav</h1>
+        </Link>
           <div className="rounded-full bg-indigo-500 px-2 text-lg handjet font-bold">
             Food
           </div>
@@ -182,7 +185,7 @@ const Food: React.FC = () => {
           />
         </div>
         {error && <p className="text-red-500">{error}</p>}
-        <button type="submit" className="btn btn-wide my-4 text-white">
+        <button type="submit" className="btn btn-wide bg-gray-800 my-4 text-white hover:bg-gray-400">
           Submit
         </button>
       </form>
@@ -191,7 +194,7 @@ const Food: React.FC = () => {
         <p>Loading...</p>
       ) : (
         responseData && (
-          <section className="flex flex-col gap-y-2 text-white mt-8 w-full max-w-2xl">
+          <section className="flex flex-col gap-y-2 text-white mt-4 w-full max-w-2xl">
             <div className="flex items-center justify-center gap-x-2">
               <SiCodemagic />
               <h3 className="handjet text-bold text-2xl">Response</h3>
