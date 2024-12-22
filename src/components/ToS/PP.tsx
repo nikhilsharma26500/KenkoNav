@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { ppContent } from './pp'
+import { ppContent } from './pp.ts'
 
-const PP = () => {
+const PrivacyPolicy = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <Link className="hover:underline" href="/">
@@ -29,4 +29,4 @@ const PP = () => {
   )
 }
 
-export default PP
+export default PrivacyPolicy
