@@ -58,7 +58,7 @@ export const tosContent: TOSSection[] = [
   {
     title: "8. Contact Information",
     content: [
-      "If you have any questions or concerns about these terms, please contact us at [Insert Contact Information].",
+      "If you have any questions or concerns about these terms, please contact us at nike26500@gmail.com",
       "By using KenkoNav, you agree to these terms and conditions. If you do not agree, please discontinue use of the platform immediately."
     ]
   }
