@@ -10,7 +10,8 @@ function App() {
     React.useEffect(() => {
       const pingServer = async () => {
         try {
-          const response = await fetch('http://127.0.0.1:8000/');
+          const PRODUCTION_URL = import.meta.env.VITE_PRODUCTION_URL;
+          const response = await fetch(`${PRODUCTION_URL}/ping`);
           const data = await response.json();
           setMessage(data.message);
         } catch (error) {
