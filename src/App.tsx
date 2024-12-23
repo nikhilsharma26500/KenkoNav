@@ -24,27 +24,29 @@ function App() {
 
   return (
     <>
-      <section className='flex flex-col justify-center items-center text-center h-screen font-mono'>
+      <section className='flex flex-col justify-center items-center text-center h-[90vh] font-mono bg-gray-50 text-gray-800'>
         <Analytics/>
         <h1 className='text-center font-bold sm:text-[100px] text-[75px] handjet'>KenkoNav</h1>
         <div className='sm:text-2xl text-md'>
           Which product would you like to pick today?
         </div>
         <div className='flex flex-col gap-y-4 my-10'>
-          <Link to="/food">
-            <button className='btn btn-wide'>
-              Food
-            </button>
-          </Link>
-          <Link to="/cosmetics">
-            <button className='btn btn-wide'>
-              Cosmetics
-            </button>
-          </Link>
+          <Button route="/food" text="Food"/>
+          <Button route="/cosmetics" text="Cosmetics"/>
         </div>
         {message && <p>{message}</p>}
       </section>
     </>
+  );
+}
+
+const Button = ({route, text} : {route: string, text: string}) => {
+  return (
+    <Link to={route}>
+      <button className='btn btn-wide rounded-none hover:bg-gray-800 hover:text-white'>
+        {text}
+      </button>
+    </Link>
   );
 }
 

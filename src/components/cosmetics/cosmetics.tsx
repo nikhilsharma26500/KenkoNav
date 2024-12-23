@@ -53,7 +53,7 @@ const InputField: React.FC<{
   <div className="sm:flex sm:items-center sm:justify-between sm:w-full sm:space-y-0 space-y-2">
     <label htmlFor={field.name} className="sm:w-1/3 text-left">{field.label}</label>
     <input
-      className="input input-bordered w-full sm:w-2/3"
+      className="input rounded-none input-bordered w-full sm:w-2/3"
       type={field.type}
       name={field.name}
       id={field.name}
@@ -140,7 +140,7 @@ const Cosmetics: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center items-center min-h-screen py-10 text-center gap-y-10 mx-auto container px-5 sm:px-0">
+    <section className="flex flex-col justify-center items-center min-h-screen py-10 text-center gap-y-10 mx-auto container px-5 sm:px-0 bg-gray-50 text-gray-800">
       <div className="gap-y-10">
         <span className="flex flex-row justify-center items-start w-full gap-x-4">
         <Link className="hover:underline" to="/">
@@ -173,7 +173,7 @@ const Cosmetics: React.FC = () => {
             Upload Photos<span className="text-red-500">*</span>
           </label>
           <input
-            className="file-input file-input-bordered w-full sm:w-2/3"
+            className="file-input rounded-none file-input-bordered w-full sm:w-2/3"
             type="file"
             name="photo"
             id="photo-upload"
@@ -183,7 +183,7 @@ const Cosmetics: React.FC = () => {
           />
         </div>
         {error && <p className="text-red-500">{error}</p>}
-        <button type="submit" className="btn btn-wide bg-gray-800 my-4 text-white hover:bg-gray-400">
+        <button type="submit" className="btn btn-wide bg-gray-800 rounded-none my-4 text-white hover:bg-gray-200 hover:text-black">
           Submit
         </button>
       </form>
@@ -197,7 +197,7 @@ const Cosmetics: React.FC = () => {
               <SiCodemagic />
               <h3 className="handjet text-bold text-2xl">Response</h3>
             </div>
-            <div className="bg-gray-800 p-4 rounded-lg">
+            <div className="bg-gray-800 p-4 rounded-none">
               <ReactMarkdown>{responseData}</ReactMarkdown>
             </div>
           </section>

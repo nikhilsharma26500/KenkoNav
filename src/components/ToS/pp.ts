@@ -72,7 +72,7 @@ export const ppContent: PPSection[] = [
   {
     title: "10. Contact Information",
     content: [
-      "If you have any questions or concerns regarding this Privacy Policy, please contact us at [Insert Contact Information].",
+      "If you have any questions or concerns regarding this Privacy Policy, please contact us at nike26500@gmail.com",
       "By using KenkoNav, you agree to this Privacy Policy. If you do not agree, please discontinue use of the platform immediately."
     ]
   }
