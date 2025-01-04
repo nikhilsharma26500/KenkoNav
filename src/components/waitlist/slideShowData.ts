@@ -1,30 +1,48 @@
 const SlideShowData = [
   { 
       slide: 1,
-      heading: "What is KenkoNav?",
+      heading: "Not sure what you're consuming?",
       info: [
-        "A platform designed to empower healthier lifestyle choices",
-        "Upload or input ingredient details for your food and cosmetics",
-        "Get AI-driven, personalized insights based on your health needs"
+        // "A platform designed to empower healthier lifestyle choices",
+        // "Upload or input ingredient details for your food and cosmetics",
+        // "Get AI-driven, personalized insights based on your health needs"
       ],
+      // heading: "What is KenkoNav?",
+      // info: [
+      //   "A platform designed to empower healthier lifestyle choices",
+      //   "Upload or input ingredient details for your food and cosmetics",
+      //   "Get AI-driven, personalized insights based on your health needs"
+      // ],
   },
   {
       slide: 2,
-      heading: "Analyze Your Food Ingredients",
+      heading: "Want to avoid harmful ingredients?",
       info: [
-        "Upload a photo of the ingredients list or manually input the details",
-        "AI analyzes ingredients for their nutritional value and potential toxins",
-        "Receive personalized feedback based on your dietary restrictions, allergies, and medical conditions"
+        // "Upload a photo of the ingredients list or manually input the details",
+        // "AI analyzes ingredients for their nutritional value and potential toxins",
+        // "Receive personalized feedback based on your dietary restrictions, allergies, and medical conditions"
       ],
+      // heading: "Analyze Your Food Ingredients",
+      // info: [
+      //   "Upload a photo of the ingredients list or manually input the details",
+      //   "AI analyzes ingredients for their nutritional value and potential toxins",
+      //   "Receive personalized feedback based on your dietary restrictions, allergies, and medical conditions"
+      // ],
   },
   {
       slide: 3,
-      heading: "Evaluate Your Cosmetics for Safety",
+      heading: "Scan the ingredients using AI to get insights!",
       info: [
-        "Upload ingredient details of your cosmetic products",
-        "Identify harmful chemicals and assess the overall safety of your products",
-        "Receive science-backed recommendations tailored to your skin type and sensitivities"
+        // "Upload ingredient details of your cosmetic products",
+        // "Identify harmful chemicals and assess the overall safety of your products",
+        // "Receive science-backed recommendations tailored to your skin type and sensitivities"
       ],
+      // heading: "Evaluate Your Cosmetics for Safety",
+      // info: [
+      //   "Upload ingredient details of your cosmetic products",
+      //   "Identify harmful chemicals and assess the overall safety of your products",
+      //   "Receive science-backed recommendations tailored to your skin type and sensitivities"
+      // ],
   },
 ];
 
