@@ -1,96 +1,40 @@
+import {
+  Leaf,
+  ShieldCheck,
+  Scan,
+  Sparkles,
+  Apple,
+  Carrot,
+  Banana,
+  Cookie,
+  Bell,
+} from "lucide-react";
+
 const SlideShowData = [
-  { 
-      slide: 1,
-      heading: "Not sure what you're consuming?",
-      info: [
-        // "A platform designed to empower healthier lifestyle choices",
-        // "Upload or input ingredient details for your food and cosmetics",
-        // "Get AI-driven, personalized insights based on your health needs"
-      ],
-      // heading: "What is KenkoNav?",
-      // info: [
-      //   "A platform designed to empower healthier lifestyle choices",
-      //   "Upload or input ingredient details for your food and cosmetics",
-      //   "Get AI-driven, personalized insights based on your health needs"
-      // ],
+  {
+    slide: 1,
+    heading: "Not sure what you're consuming?",
+    info: [],
+    icon: Leaf,
+    accent: "from-emerald-400 to-green-500",
+    decoration: [Apple, Carrot],
   },
   {
-      slide: 2,
-      heading: "Want to avoid harmful ingredients?",
-      info: [
-        // "Upload a photo of the ingredients list or manually input the details",
-        // "AI analyzes ingredients for their nutritional value and potential toxins",
-        // "Receive personalized feedback based on your dietary restrictions, allergies, and medical conditions"
-      ],
-      // heading: "Analyze Your Food Ingredients",
-      // info: [
-      //   "Upload a photo of the ingredients list or manually input the details",
-      //   "AI analyzes ingredients for their nutritional value and potential toxins",
-      //   "Receive personalized feedback based on your dietary restrictions, allergies, and medical conditions"
-      // ],
+    slide: 2,
+    heading: "Want to avoid harmful ingredients?",
+    info: [],
+    icon: ShieldCheck,
+    accent: "from-violet-400 to-purple-500",
+    decoration: [Cookie, Bell],
   },
   {
-      slide: 3,
-      heading: "Scan the ingredients using AI to get insights!",
-      info: [
-        // "Upload ingredient details of your cosmetic products",
-        // "Identify harmful chemicals and assess the overall safety of your products",
-        // "Receive science-backed recommendations tailored to your skin type and sensitivities"
-      ],
-      // heading: "Evaluate Your Cosmetics for Safety",
-      // info: [
-      //   "Upload ingredient details of your cosmetic products",
-      //   "Identify harmful chemicals and assess the overall safety of your products",
-      //   "Receive science-backed recommendations tailored to your skin type and sensitivities"
-      // ],
+    slide: 3,
+    heading: "Scan the ingredients using AI to get insights!",
+    info: [],
+    icon: Scan,
+    accent: "from-blue-400 to-cyan-500",
+    decoration: [Sparkles, Banana],
   },
 ];
 
-
-interface Plans {
-  title: string,
-  price: string,
-  features: string[],
-  buttonText: string,
-  buttonColor: string,
-  iconBgColor: string,
-  iconColor: string
-}
-
-const PlansMonthly: Plans[] = [
-    {
-      title: "Students",
-      price: "$5/month",
-      features: [
-        "A",
-        "B",
-        "C",
-        "D",  
-      ],
-      buttonText: "Get started",
-      buttonColor: "bg-gray-800 hover:bg-gray-900",
-      iconBgColor: "bg-blue-gray-50",
-      iconColor: "text-gray-600",
-    },
-    {
-      title: "Regular",
-      price: "$15/month",
-      features: [
-        "A",
-        "B",
-        "C",
-        "D",  
-      ],
-      buttonText: "Get started",
-      buttonColor: "bg-gray-800 hover:bg-gray-900",
-      iconBgColor: "bg-blue-gray-50",
-      iconColor: "text-gray-600",
-    },
-  ];
-  
-
-
-
-
-
-export { SlideShowData, PlansMonthly };
+export { SlideShowData };

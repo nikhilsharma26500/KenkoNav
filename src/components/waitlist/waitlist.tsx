@@ -1,47 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  Leaf,
-  ShieldCheck,
-  Scan,
-  Sparkles,
-  Apple,
-  Carrot,
-  Banana,
-  Cookie,
-  Bell
-} from "lucide-react";
-
+import { SlideShowData } from "./slideShowData";
 import '../../App.css'
 import { Toaster } from "react-hot-toast";
 import emailjs from "@emailjs/browser";
 import toast from "react-hot-toast";
 
-const SlideShowData = [
-  {
-    slide: 1,
-    heading: "Not sure what you're consuming?",
-    info: [],
-    icon: Leaf,
-    accent: "from-emerald-400 to-green-500",
-    decoration: [Apple, Carrot]
-  },
-  {
-    slide: 2,
-    heading: "Want to avoid harmful ingredients?",
-    info: [],
-    icon: ShieldCheck,
-    accent: "from-violet-400 to-purple-500",
-    decoration: [Cookie, Bell]
-  },
-  {
-    slide: 3,
-    heading: "Scan the ingredients using AI to get insights!",
-    info: [],
-    icon: Scan,
-    accent: "from-blue-400 to-cyan-500",
-    decoration: [Sparkles, Banana]
-  },
-];
 
 const FloatingIcon = ({ Icon, className }: { Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>, className: string }) => (
   <div className={`absolute ${className} animate-float`}>
@@ -138,7 +101,7 @@ const Waitlist = () => {
                 <div className="h-1 w-1/2 bg-gray-900 rounded-full mx-auto md:mx-0" />
               </div>
               <p className="text-base sm:text-lg text-gray-600">
-                AI-powered guide to healthier food choices
+                Guide for healthier choices!
               </p>
             </div>
 
