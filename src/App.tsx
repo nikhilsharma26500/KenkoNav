@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Link } from 'react-router-dom';
 import { Analytics } from "@vercel/analytics/react"
+import { MdRadioButtonChecked } from "react-icons/md";
 
 function App() {
 
@@ -13,9 +14,12 @@ function App() {
           const PRODUCTION_URL = import.meta.env.VITE_PRODUCTION_URL;
           const response = await fetch(`${PRODUCTION_URL}/ping`);
           const data = await response.json();
-          setMessage(data.message);
+          // setMessage(data.message);
+          setMessage('Server is up');
+          console.log(data);
         } catch (error) {
-          setMessage(String(error));
+          // setMessage('Server is down');
+          console.error(error);
         }
       };
   
@@ -34,7 +38,8 @@ function App() {
           <Button route="/food" text="Food"/>
           <Button route="/cosmetics" text="Cosmetics"/>
         </div>
-        {message && <p>{message}</p>}
+        {message ? <p className='flex items-center justify-center gap-x-2'><MdRadioButtonChecked className='text-green-500'/>{message}</p>
+        : <p className='flex items-center justify-center gap-x-2'><MdRadioButtonChecked className='text-red-500'/>Server is down</p>}
       </section>
     </>
   );
