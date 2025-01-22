@@ -192,7 +192,7 @@ const Food: React.FC = () => {
       </form>
 
       {loading ? (
-        <p className="flex items-center justify-center"><RiLoader2Fill/>Loading...</p>
+        <p className="flex items-center justify-center gap-x-2"><RiLoader2Fill/>Loading...</p>
       ) : (
         responseData && (
           <section className="flex flex-col gap-y-2 text-white mt-4 w-full max-w-2xl">
