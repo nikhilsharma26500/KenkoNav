@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import { SiCodemagic } from "react-icons/si";
 import { Link } from 'react-router-dom'
 import { RiLoader2Fill } from "react-icons/ri";
+import { ArrowLeft } from "lucide-react";
 
 interface FormField {
   label: string;
@@ -141,13 +142,16 @@ const Cosmetics: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center items-center min-h-screen py-10 text-center gap-y-10 mx-auto container px-5 sm:px-0 bg-gray-50 text-gray-800">
+    <section className="flex flex-col justify-center items-center min-h-screen py-10 text-center gap-y-10 mx-auto container px-5 sm:px-0 bg-gray-50 text-gray-800 relative">
+      <button className="absolute text-sm md:text-md top-2 md:top-4 left-4 bg-gray-800 hover:bg-indigo-500 rounded-full py-1 px-2 text-white inline-flex items-center gap-x-1"><ArrowLeft size={16} />
+        <Link to="/">Back</Link>
+      </button>
       <div className="gap-y-10">
         <span className="flex flex-row justify-center items-start w-full gap-x-4">
-        <Link className="hover:underline" to="/">
-          <h1 className="handjet text-6xl font-bold">KenkoNav</h1>
-        </Link>
-          <div className="rounded-full bg-indigo-500 px-2 text-lg handjet font-bold">
+          <Link className="hover:underline" to="/">
+            <h1 className="handjet text-6xl font-bold">KenkoNav</h1>
+          </Link>
+          <div className="rounded-full bg-indigo-500 text-white px-2 text-lg handjet font-bold">
             Cosmetics
           </div>
         </span>
@@ -190,7 +194,7 @@ const Cosmetics: React.FC = () => {
       </form>
 
       {loading ? (
-        <p className="flex items-center justify-center gap-x-2"><RiLoader2Fill/>Loading...</p>
+        <p className="flex items-center justify-center gap-x-2"><RiLoader2Fill />Loading...</p>
       ) : (
         responseData && (
           <section className="flex flex-col gap-y-2 text-white mt-4 w-full max-w-2xl">

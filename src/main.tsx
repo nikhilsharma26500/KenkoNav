@@ -4,7 +4,7 @@ import App from './App.tsx'
 import Food from './components/food/food.tsx'
 import Cosmetics from './components/cosmetics/cosmetics.tsx'
 // import Waitlist from './components/waitlist/waitlist_temp.tsx'
-// import WaitlistMain from './components/waitlist/waitlist.tsx'
+import Waitlist from './components/waitlist/waitlist.tsx'
 import Layout from './layout.tsx'
 import TermsOfService from './components/ToS/TOS.tsx'
 import PrivacyPolicy from './components/ToS/PP.tsx'
@@ -32,7 +32,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path='/waitlist' element={<WaitlistMain/>} /> */}
         <Route path='/tos' element={<TermsOfService />} />
         <Route path='/privacy_policy' element={<PrivacyPolicy />} />
-        {/* <Route path="/waitlist" element={<Waitlist />} /> */}
+        <Route path="/waitlist" element={<Waitlist />} />
       </Routes>
       </Layout>
     </Router>
