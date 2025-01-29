@@ -50,7 +50,8 @@ function App() {
         <Analytics />
 
         {/* Slider Container */}
-        <section className='w-[40%]'>
+        <section className='md:w-[40%]'>
+
           <div className="relative mt-8 md:mt-0">
             <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-transparent rounded-none md:rounded-3xl backdrop-blur-sm" />
             <div className="relative h-64 sm:h-80 md:h-full flex items-center justify-center p-4 sm:p-6">
@@ -80,17 +81,21 @@ function App() {
         </section>
 
         {/* Main Container */}
-        <section className='w-[40%]'>
-          <h1 className='text-center font-bold sm:text-[100px] text-[75px] handjet'>KenkoNav</h1>
-          <div className='sm:text-2xl text-md'>
-            Which product would you like to pick today?
+        <section className='w-[40%] flex flex-col items-center justify-center'>
+          <div className='inline-block'>
+            <h1 className='text-4xl sm:text-5xl md:text-8xl font-bold bg-gradient-to-r from-zinc-900 to-gray-700 bg-clip-text text-transparent handjet'>KenkoNav</h1>
+            <p className="text-md mb-4">Guiding you for healthier choices.</p>
+          </div>
+
+          <div className='sm:text-xl text-md'>
+            Which product would you like to test today?
           </div>
           <div className='flex flex-col gap-y-4 my-10'>
             <Button route="/food" text="Food" />
             <Button route="/cosmetics" text="Cosmetics" />
           </div>
-          {message ? <p className='flex items-center justify-center gap-x-2'><MdRadioButtonChecked className='text-green-500' />{message}</p>
-            : <p className='flex items-center justify-center gap-x-2'><MdRadioButtonChecked className='text-red-500' />Server is down</p>}
+          {message ? <p className='flex max-w-fit bg-green-100 px-4 py-2 rounded-full items-center justify-center gap-x-2'><MdRadioButtonChecked className='text-green-500' />{message}</p>
+            : <p className='flex max-w-fit bg-red-100 px-4 py-2 rounded-full items-center justify-center gap-x-2'><MdRadioButtonChecked className='text-red-500' />Server loading. Please wait!</p>}
         </section>
       </section>
     </>
