@@ -46,8 +46,25 @@ function App() {
 
   return (
     <>
-      <section className='flex justify-evenly items-center text-center h-[90vh] font-mono bg-gray-50 text-gray-800'>
+      <section className='flex flex-col md:flex-row justify-evenly items-center text-center min-h-screen md:h-[90vh] font-mono bg-gray-50 text-gray-800 p-4 md:p-0'>
         <Analytics />
+
+        <section className='md:w-[40%] flex flex-col items-center justify-center md:hidden'>
+          <div className='inline-block'>
+            <h1 className='text-6xl md:text-8xl font-bold bg-gradient-to-r from-zinc-900 to-gray-700 bg-clip-text text-transparent handjet'>KenkoNav</h1>
+            <p className="text-sm border-2 w-full sm:text-md mb-4">Guiding you for healthier choices.</p>
+          </div>
+
+          <div className='sm:text-xl text-md'>
+            Which product would you like to test today?
+          </div>
+          <div className='flex flex-col gap-y-4 my-10'>
+            <Button route="/food" text="Food" />
+            <Button route="/cosmetics" text="Cosmetics" />
+          </div>
+          {message ? <p className='flex max-w-fit bg-green-100 px-4 py-2 rounded-full items-center justify-center gap-x-2'><MdRadioButtonChecked className='text-green-500' />{message}</p>
+            : <p className='flex max-w-fit bg-red-100 px-4 py-2 rounded-full items-center justify-center gap-x-2'><MdRadioButtonChecked className='text-red-500' />Server loading. Please wait!</p>}
+        </section>
 
         {/* Slider Container */}
         <section className='md:w-[40%]'>
@@ -71,7 +88,7 @@ function App() {
                     <div className="absolute inset-0 bg-white/20 rounded-2xl md:rounded-3xl blur-xl" />
                   </div>
 
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent px-4">
+                  <h2 className="text-xl sm:text-3xl md:text-4xl font-semibold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent px-4">
                     {SlideShowData[currentSlide].heading}
                   </h2>
                 </div>
@@ -81,10 +98,10 @@ function App() {
         </section>
 
         {/* Main Container */}
-        <section className='w-[40%] flex flex-col items-center justify-center'>
+        <section className='md:w-[40%] md:flex flex-col items-center justify-center hidden'>
           <div className='inline-block'>
-            <h1 className='text-4xl sm:text-5xl md:text-8xl font-bold bg-gradient-to-r from-zinc-900 to-gray-700 bg-clip-text text-transparent handjet'>KenkoNav</h1>
-            <p className="text-md mb-4">Guiding you for healthier choices.</p>
+            <h1 className='text-6xl md:text-8xl font-bold bg-gradient-to-r from-zinc-900 to-gray-700 bg-clip-text text-transparent handjet'>KenkoNav</h1>
+            <p className="text-sm w-full sm:text-lg mb-4">Guiding you for healthier choices.</p>
           </div>
 
           <div className='sm:text-xl text-md'>

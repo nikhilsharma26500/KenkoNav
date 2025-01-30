@@ -128,7 +128,7 @@ const Food: React.FC = () => {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Form submitted successfully:", result);
+        // console.log("Form submitted successfully:", result);
         setResponseData(result);
         setError("");
       } else {
@@ -177,7 +177,7 @@ const Food: React.FC = () => {
         ))}
         <div className="sm:flex sm:items-center sm:justify-between w-full sm:space-y-0 space-y-2">
           <label htmlFor="photo-upload" className="sm:w-1/3 text-left">
-            Upload Photos<span className="text-red-500">*</span>
+            Upload Photo<span className="text-red-500">*</span>
           </label>
           <input
             className="file-input file-input-bordered rounded-none w-full sm:w-2/3"
@@ -189,6 +189,9 @@ const Food: React.FC = () => {
             required
           />
         </div>
+        <p className="text-sm text-gray-500">
+          This is for experimental purposes only. <br /> Please consult a medical professional for accurate information.
+        </p>
         {error && <p className="text-red-500">{error}</p>}
         <button type="submit" className="btn btn-wide bg-gray-800 rounded-none my-4 text-white hover:bg-gray-200 hover:text-black">
           Submit
