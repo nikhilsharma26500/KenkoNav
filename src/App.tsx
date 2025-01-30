@@ -52,7 +52,7 @@ function App() {
         <section className='md:w-[40%] flex flex-col items-center justify-center md:hidden'>
           <div className='inline-block'>
             <h1 className='text-6xl md:text-8xl font-bold bg-gradient-to-r from-zinc-900 to-gray-700 bg-clip-text text-transparent handjet'>KenkoNav</h1>
-            <p className="text-sm border-2 w-full sm:text-md mb-4">Guiding you for healthier choices.</p>
+            <p className="text-sm w-full sm:text-md mb-4">Guiding you for healthier choices.</p>
           </div>
 
           <div className='sm:text-xl text-md'>
